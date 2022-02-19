@@ -42,9 +42,9 @@ enc_dir_up = True
 enc_prev = 10
 enc_int = enc_max/2 # set mid scale for now
 enc_int_min = 0
-enc_div = 8 # guess
+enc_div = 6  # guess
 enc_int_max = enc_max * enc_div
-text_blit = 'Undefined'
+
 
 angle = 0 # angle runs from -80 to +80 degrees
 # vol_taper controls the program audio levels
@@ -55,6 +55,7 @@ vol_noise = [0,0,40,50,60,70,80,85,90,90,95,95,100,100,100]
 
 shuffle = False
 play_list = '/var/lib/mpd/playlists/playlist2.m3u'
+path = '/home/pi/Mod-Radio/'
 # set up display
 #pygame.init()
 #screen_width=841
@@ -63,16 +64,16 @@ play_list = '/var/lib/mpd/playlists/playlist2.m3u'
 #size=(screen_width, screen_height)
 #display = pygame.display.set_mode(size)
 # files used by graphics
-eye0_img = 'Eyeball0.png'
-eye1_img = 'Eyeball1.png'
-eye2_img = 'Eyeball2.png'
-eye3_img = 'Eyeball3.png'
-eye4_img = 'Eyeball4.png'
-eye5_img = 'Eyeball5.png'
-eye6_img = 'Eyeball6.png'
-needle_img = 'Needle.png'
-radio_img = 'Radio.png'
-mask_img = 'Mask_Needle.png'
+eye0_img = path + 'Eyeball0.png'
+eye1_img = path +'Eyeball1.png'
+eye2_img = path +'Eyeball2.png'
+eye3_img = path +'Eyeball3.png'
+eye4_img = path +'Eyeball4.png'
+eye5_img = path +'Eyeball5.png'
+eye6_img = path +'Eyeball6.png'
+needle_img = path +'Needle.png'
+radio_img = path +'Radio.png'
+mask_img = path +'Mask_Needle.png'
 # load up the images
 eye0 = pygame.image.load(eye0_img).convert_alpha()
 eye1 = pygame.image.load(eye1_img).convert_alpha()
@@ -443,17 +444,18 @@ def rotation_decode(enc_calling):
 
 
 # ----------------------------- Rotary Code End -----------------------------
-# opening the file in read mode
-my_file = open("/home/pi/Mod-Radio/playlist-text.txt", "r")
+# get the text file of station ids
+station_file = open("/home/pi/Mod-Radio/playlist-text.txt", "r")
 
 # reading the file
-station_text = my_file.read()
+station_text = station_file.read()
 
 # replacing end splitting the text
 # when newline ('\n') is seen.
 statxt_list = station_text.split("\n")
 print(statxt_list)
-my_file.close()
+station_file.close()
+text_blit = statxt_list[0]
 
 
 
@@ -484,6 +486,7 @@ pygame.mixer.music.play(-1)
 # Run it for a couple of seconds
 time.sleep(2)
 pygame.mixer.music.pause()
+pygame.mouse.set_visible(False)
 
 #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
@@ -536,7 +539,12 @@ def main():
                     angle = tune_needle(enc_val)
                     print('Angle value= ',angle)
                     tuner(enc_val, angle)            
-            
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                GPIO.cleanup()
+                subprocess.call("mpc stop", shell=True)
+                sys.exit()
+
+
             #tuner(enc_val)
                 
 
