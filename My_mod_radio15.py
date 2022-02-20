@@ -1,18 +1,8 @@
 #!/usr/bin/python3
-# 
-# Version 4: removed commented debugging print statements
-# added noise
-# V-5: changed the way noise is controlled
-# V-6: start adding code to run graphics
-# V-7: move graphics initialization here
-# V-8: eyeball is now correct added manual tuning buttons
-# V-9: new encoder arrived and it sort of works, steps wrong when fast
-# V-10 stable but jumps back and can't handle high speed
-# V-11 simulates what it will do with EM402 chip
-# V-12 removed button push original code. Changed testing module to blit_module
-# V-13 moved port assignments up just after GPIO import
-# V-14 changed initialization to tune home station and blit screen
-# V-15 cleaned up more debugging print statements saved from VS
+ 
+
+# V-15 major changes to tuning and station assignment
+# Hard coded 6 station locations 
 
 import sys, pygame
 from pygame.locals import *
