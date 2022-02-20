@@ -17,13 +17,13 @@ import os
 import glob
 import RPi.GPIO as GPIO
 GPIO.setmode(GPIO.BCM)
-
+import random
+import blit_module
 # GPIO Ports
 Enc_A = 13  # Encoder input A: input GPIO 13 (active high)
 Enc_B = 19  # Encoder input B: input GPIO 19 (active high)
 Enc_pb = 16 # Encoder push button
-import random
-import blit_module
+
 # set up these global variables
 enc_min = 0
 enc_max = 255
@@ -152,15 +152,6 @@ class Port(): #Capatilize Classes
                 GPIO.output(self.pnum, GPIO.HIGH)
         else:
             pass    
-
-    
-
-
-
-def get_ports():
-    clk.read_port()
-    dt.read_port()
-
 
 
 def tuner(enc_val,angle):
